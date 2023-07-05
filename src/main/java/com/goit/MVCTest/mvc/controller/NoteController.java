@@ -13,20 +13,27 @@ import java.util.List;
 @RequestMapping("/note")
 public class NoteController {
     private final NoteService noteService;
+    @GetMapping("/list")
+    public ModelAndView listAll() {
+        System.out.println("Listing notes");
+        List<Note> notes = noteService.listAll();
+        ModelAndView noteList = new ModelAndView("note");
+        noteList.addObject("notes", notes);
+        return noteList;
+    }
 
-     @GetMapping("/list")
-    public ModelAndView getAllNotes(){
-         ModelAndView result = new ModelAndView("note");
-         result.addObject("note", noteService.listAll());
-         return result;
+      @PostMapping("/edit")
+     public String postUpdateNote( Note note){
+         noteService.update(note);
+         return "redirect:/note/list";
      }
 
-      @PostMapping()
-     public ModelAndView postUpdateNote( Note note){
-         ModelAndView result = new ModelAndView("note");
-         result.addObject("note",noteService.update(note));
-         return result;
-     }
+//  @GetMapping("/edit")
+//     public ModelAndView editNote(@RequestParam (name = "id") Long id){
+//       ModelAndView modelAndView = new ModelAndView("edit");
+//       modelAndView.addObject("note");
+//       return modelAndView;
+//    }
 
      @DeleteMapping("/delete/{id}")
     public String deleteNote(@PathVariable ("id") Long id){

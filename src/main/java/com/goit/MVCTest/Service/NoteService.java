@@ -15,7 +15,6 @@ public class NoteService {
     }
 
     public List<Note> listAll(){
-
         return  notes;
     }
 
@@ -28,10 +27,9 @@ public class NoteService {
         notes.remove(notes.get((int)id));
     }
 
-    public Note update(Note note){
+    public void update(Note note){
         Note updateNote = getById(note.getId());
         updateNote.setTitle(note.getTitle());
         updateNote.setContent(note.getContent());
-        return updateNote;
     }
 }
