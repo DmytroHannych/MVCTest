@@ -13,6 +13,14 @@ import java.util.List;
 @RequestMapping("/note")
 public class NoteController {
     private final NoteService noteService;
+
+
+    public ModelAndView addNote(@RequestParam(name = "id") Long id, @RequestParam(name = "title") String title, @RequestParam(name = "conect") String conect){
+        ModelAndView modelAndView = new ModelAndView("note");
+        Note note = new Note(id,title,conect);
+        modelAndView.addObject("note", noteService.add(note));
+        return modelAndView;
+    }
     @GetMapping("/list")
     public ModelAndView listAll() {
         System.out.println("Listing notes");
