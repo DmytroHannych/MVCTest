@@ -18,10 +18,11 @@ public class NoteController {
 
     @PostMapping("/new")
     public String newNote(@ModelAttribute Note note, Model model) {
+             noteService.add(note);
             model.addAttribute("note", note);
-            noteService.add(note);
             return "redirect:/note/list";
     }
+
     @GetMapping("/list")
     public ModelAndView listAll() {
         System.out.println("Listing notes");
@@ -38,20 +39,16 @@ public class NoteController {
         return "redirect:/note/list";
     }
 
-  @GetMapping("/edit/{id}")
-     public ModelAndView editNote(@RequestParam (name = "id") Long id){
+  @GetMapping("/edit")
+     public String editNote(@RequestParam ("id") Long id, Model model){
       Note byId = noteService.getById(id);
-      ModelAndView modelAndView = new ModelAndView("edit");
-       modelAndView.addObject("note",byId);
-       return modelAndView;
+      model.addAttribute("note",byId);
+      return "edit";
     }
 
-     @DeleteMapping("/delete/{id}")
-    public String deleteNote(@PathVariable ("id") Long id){
-         System.out.println("delete controller");
-         noteService.deleteById(id);
+     @PostMapping("/delete")
+    public String deleteNote(@RequestParam ("id") long id){
+        noteService.deleteById(id);
         return "redirect:/note/list";
     }
-
-
 }

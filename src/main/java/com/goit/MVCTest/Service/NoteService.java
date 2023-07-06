@@ -10,8 +10,10 @@ public class NoteService {
     List<Note> notes = new ArrayList<Note>();
 
     public Note getById(long id){
-        Note note = notes.get((int) id);
-        return note;
+       return notes.stream().
+                filter(note -> note.getId()==id)
+                .findFirst()
+               .get();
     }
 
     public List<Note> listAll(){
@@ -19,13 +21,13 @@ public class NoteService {
     }
 
     public Note add(Note note){
+        note.setId(notes.size() + 1L);
          notes.add(note);
          return note;
     }
 
     public void deleteById(long id){
-
-        notes.remove(notes.get((int)id));
+        notes.remove(notes.get((int) id));
     }
 
     public void update(Note note){

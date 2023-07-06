@@ -14,11 +14,14 @@
 <body>
 <div>
     <h2>Update Note</h2>
-    <h4>Title</h4>
-    <input type="text" name="title" th:value="${note.title}"/>
-    <h4>Conect</h4>
-    <input type="text" name="content" th:value="${note.content}"/>
-    <button type="submit" >Update</button>
+    <form th:action="@{/note/edit}" method="post">
+        <input type="hidden" name="id" th:value="${note.id}"/>
+        <h4>Title</h4>
+        <input type="text" name="title" th:value="${note.title}"/>
+        <h4>Conect</h4>
+        <input type="text" name="content" th:value="${note.content}"/>
+        <button type="submit" >Update</button>
+    </form>
 </div>
 </body>
 </html>
