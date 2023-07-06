@@ -16,53 +16,48 @@
 </head>
 <body>
 <h1>My Notes</h1>
-
 <div>
+    <form method="post" th:action="@{/note/new}">
     <h2>Add Note</h2>
-    <h4>ID</h4>
-    <input type="number"/>
+<!--    <h4>ID</h4>-->
+        <input type="hidden" name="id" th:value="${id}"/>
     <h4>Title</h4>
-    <input type="text"/>
+    <input type="text" name="title" th:value="${title}"/>
     <h4>Conect</h4>
-    <input type="text"/>
+        <input type="text" name="content" th:value="${content}"/>
     <button type="submit" >Add</button>
+    </form>
 </div>
 
-
-<div>
-    <h2>Note List</h2>
-    <table>
+<h1>Note List</h1>
+<div class="table-responsive">
+    <table class="table">
         <thead>
         <tr>
             <th>Title</th>
             <th>Content</th>
-            <th>Action</th>
+            <th width="5%">Actions</th>
+            <th width="5%"></th>
         </tr>
         </thead>
-            <li th:each="note : ${notes}">
-        <tb>
-            <tr>
-                <td >
-                    <input type="text" name="${note.getTitle}">
-                </td>
-                <td>
-                    <input type="text" name="${note.getContent}">
-                </td>
-                <td>
-                    <form method="get" th:action="@{/note/edit(id=${note.id})}">
-                        <input type="hidden" name="id" th:value="${note.id}"/>
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </form>
-                </td>
-                <td>
-                    <form method="post" th:action="@{/note/delete}">
-                        <input type="hidden" name="id" th:value="${note.id}"/>
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </tb>
-            </li>
+        <tbody>
+        <tr th:each="note : ${notes}">
+            <td th:text="${note.title}"></td>
+            <td th:text="${note.content}"></td>
+            <td>
+                <form method="get" th:action="@{/note/edit(id=${note.id})}">
+                    <input type="hidden" name="id" th:value="${note.id}"/>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form method="post" th:action="@{/note/delete}">
+                    <input type="hidden" name="id" th:value="${note.id}"/>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
     </table>
 </div>
 </body>
