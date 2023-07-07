@@ -27,7 +27,7 @@ public class NoteService {
     }
 
     public void deleteById(long id){
-        notes.remove(notes.get((int) id));
+        notes.remove(getById(id));
     }
 
     public void update(Note note){
