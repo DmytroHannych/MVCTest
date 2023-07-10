@@ -2,6 +2,7 @@ package com.goit.MVCTest.mvc.controller;
 
 import com.goit.MVCTest.Entity.Note;
 import com.goit.MVCTest.Service.NoteService;
+import com.goit.MVCTest.Service.NoteServiceDB;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +14,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/note")
 public class NoteController {
-    private final NoteService noteService;
+//    private final NoteService noteService;
+    private final NoteServiceDB noteServiceDB;
 
 
     @PostMapping("/new")
     public String newNote(@ModelAttribute Note note, Model model) {
-             noteService.add(note);
+            noteServiceDB.add(note);
             model.addAttribute("note", note);
             return "redirect:/note/list";
     }
@@ -26,7 +28,7 @@ public class NoteController {
     @GetMapping("/list")
     public ModelAndView listAll() {
         System.out.println("Listing notes");
-        List<Note> notes = noteService.listAll();
+        List<Note> notes = noteServiceDB.allNote();
         ModelAndView noteList = new ModelAndView("note");
         noteList.addObject("notes", notes);
         return noteList;
@@ -35,20 +37,20 @@ public class NoteController {
     @PostMapping("/edit")
     public String postUpdateNote(@ModelAttribute Note note) {
         System.out.println("edit controller");
-        noteService.update(note);
+        noteServiceDB.add(note);
         return "redirect:/note/list";
     }
 
   @GetMapping("/edit")
      public String editNote(@RequestParam ("id") Long id, Model model){
-      Note byId = noteService.getById(id);
+      Note byId = noteServiceDB.getById(id);
       model.addAttribute("note",byId);
       return "edit";
     }
 
      @PostMapping("/delete")
     public String deleteNote(@RequestParam ("id") long id){
-        noteService.deleteById(id);
+        noteServiceDB.deleteById(id);
         return "redirect:/note/list";
     }
 }
